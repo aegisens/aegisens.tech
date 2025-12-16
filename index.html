@@ -350,31 +350,33 @@
     </div>
 
     <script>
-        // PASSWORD PROTECTION
-        const CORRECT_PASSWORD = "AegisensStealth2025";
+    // PASSWORD PROTECTION - FUNKCJA GLOBALNA
+    const CORRECT_PASSWORD = "AegisensStealth2025";
+    
+    function checkPassword() {
+        const input = document.getElementById('passwordInput');
+        const error = document.getElementById('errorMessage');
+        const gate = document.getElementById('passwordGate');
+        const content = document.getElementById('mainContent');
         
-        function checkPassword() {
-            const input = document.getElementById('passwordInput').value;
-            const error = document.getElementById('errorMessage');
-            const gate = document.getElementById('passwordGate');
-            const content = document.getElementById('mainContent');
-            
-            if (input === CORRECT_PASSWORD) {
-                gate.style.display = 'none';
-                content.classList.add('active');
-                // Update URL hash for bookmarking
-                window.location.hash = 'unlocked';
-            } else {
-                error.style.display = 'block';
-                document.getElementById('passwordInput').style.borderColor = '#ff6b6b';
-            }
+        if (input.value === CORRECT_PASSWORD) {
+            gate.style.display = 'none';
+            content.classList.add('active');
+            window.location.hash = 'unlocked';
+        } else {
+            error.style.display = 'block';
+            input.style.borderColor = '#ff6b6b';
         }
-        // Allow Enter key
+    }
+    
+    // CZEKAMY NA STRONĘ I PODPINAMY EVENTY
+    document.addEventListener('DOMContentLoaded', function() {
+        // Enter key support
         document.getElementById('passwordInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') checkPassword();
         });
         
-        // If already unlocked via hash
+        // Auto-unlock if hash present
         if (window.location.hash === '#unlocked') {
             document.getElementById('passwordGate').style.display = 'none';
             document.getElementById('mainContent').classList.add('active');
@@ -391,14 +393,14 @@
             1: { energy: 85, migraine: 10, text: "Restart cycle, gentle movement, protein focus" },
             7: { energy: 95, migraine: 5, text: "Peak energy - ideal for intense exercise" },
             14: { energy: 72, migraine: 15, text: "Light exercise, hydrate, monitor glucose" },
-21: { energy: 60, migraine: 35, text: "Reduce stress, magnesium supplement, rest" },
+            21: { energy: 60, migraine: 35, text: "Reduce stress, magnesium supplement, rest" },
             28: { energy: 45, migraine: 60, text: "Gentle yoga, warm baths, avoid triggers" }
         };
         
         function updatePrediction(day) {
+            // POPRAWIONE: backticks zamiast apostrofów
             dayDisplay.textContent = Day ${day};
             
-            // Find closest prediction day
             let closestDay = 1;
             let minDiff = 28;
             for (const predDay in predictions) {
@@ -416,20 +418,21 @@
                                       High (${pred.migraine}%);
             suggestion.textContent = pred.text;
             
-            // Color coding for migraine risk
             migraineRisk.style.color = pred.migraine < 30 ? '#28ca42' : 
                                       pred.migraine < 50 ? '#ffbd2e' : '#ff6b6b';
         }
         
-        cycleSlider.addEventListener('input', function() {
-            updatePrediction(parseInt(this.value));
-        });
-        
-        // Initialize
-        updatePrediction(14);
-    </script>
+        if (cycleSlider) {
+            cycleSlider.addEventListener('input', function() {
+                updatePrediction(parseInt(this.value));
+            });
+            updatePrediction(14);
+        }
+    });
+</script>
 </body>
 
 </html>
+
 
 
