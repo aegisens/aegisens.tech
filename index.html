@@ -3,104 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aegisens - Secure Access</title>
+    <title>Aegisync Tech Core | Stealth Demo</title>
     <style>
-        /* Stylowanie bramki */
-        #passwordGate {
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0a0e17;
+            color: #e2e8f0;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .password-gate {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 80vh;
             text-align: center;
-            padding: 20px;
         }
-        .lock-icon {
-            font-size: 4rem;
+        .password-gate h1 {
+            font-size: 2.5rem;
             margin-bottom: 1rem;
+            background: linear-gradient(90deg, #00d4ff, #0088ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
-        #passwordInput {
-            padding: 15px 20px;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 50px;
-            margin: 20px 0;
-            width: 300px;
-            max-width: 80%;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        .password-input {
+            margin: 2rem 0;
+            display: flex;
+            gap: 10px;
         }
-        #unlockButton {
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            background: #fff;
-            color: #764ba2;
+        .password-input input {
+            padding: 12px 20px;
+            border: 2px solid #2d3748;
+            border-radius: 8px;
+            background: #1a202c;
+            color: white;
+            font-size: 1rem;
+            width: 250px;
+        }
+        .password-input button {
+            padding: 12px 24px;
+            background: linear-gradient(90deg, #0088ff, #00d4ff);
             border: none;
-            border-radius: 50px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
             cursor: pointer;
-            font-weight: bold;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s;
         }
-        #unlockButton:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 7px 14px rgba(0,0,0,0.2);
+        .password-input button:hover {
+            transform: translateY(-2px);
         }
-        #errorMessage {
-            color: #ffcccb;
-            margin-top: 15px;
+        .error-message {
+            color: #ff6b6b;
+            margin-top: 10px;
             display: none;
+        }
+        
+        /* CONTENT (hidden until password) */
+        .content {
+            display: none;
+        }
+        .content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section {
+            background: #1a202c;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid #2d3748;
+        }
+        h2 {
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        h3 {
+            color: #90cdf4;
+            margin: 1rem 0 0.5rem;
+        }
+        
+        /* Hormonal Predictor Demo */
+        .predictor-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 1rem;
+        }
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .cycle-slider {
+            flex: 1;
+            height: 8px;
+            -webkit-appearance: none;
+            background: #2d3748;
+            border-radius: 4px;
+            outline: none;
+        }
+        .cycle-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #0088ff;
+            cursor: pointer;
+        }
+        .day-display {
+            font-size: 1.2rem;
             font-weight: bold;
+            min-width: 60px;
+            color: #00d4ff;
         }
-
-        /* Stylowanie głównej zawartości */
-        #mainContent {
-            display: none; /* Ukryte na start */
-            padding: 40px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        .prediction-output {
+            background: #2d3748;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #0088ff;
         }
-        .welcome-message {
-            background: #f0f4ff;
-            padding: 30px;
-            border-radius: 15px;
-            margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        
+        /* Competitor Proof */
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 1rem;
+        }
+        .screenshot {
+            background: #2d3748;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #4a5568;
+        }
+        .screenshot img {
+            width: 100%;
+            display: block;
+            border-bottom: 1px solid #4a5568;
+        }
+        .screenshot-caption {
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: #a0aec0;
+        }
+        
+        /* Architecture Diagram */
+        .architecture {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 2rem 0;
+        }
+        .arch-node {
+            background: #2d3748;
+            padding: 1rem;
+            border-radius: 8px;
+            min-width: 150px;
+            text-align: center;
+            border: 2px solid #00d4ff;
+            position: relative;
+        }
+        .arch-node::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #00d4ff;
+            font-size: 1.5rem;
+        }
+        .arch-node:last-child::after {
+            display: none;
+        }
+        
+        .footnote {
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid #2d3748;
+            color: #a0aec0;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .architecture {
+                flex-direction: column;
+                align-items: center;
+            }
+            .arch-node::after {
+                content: '↓';
+                right: 50%;
+                bottom: -25px;
+                top: auto;
+                left: auto;
+                transform: translateX(50%);
+            }
         }
     </style>
 </head>
+
 <body>
-    <!-- BRAMKA HASŁA - widoczna na początku -->
-    <div id="passwordGate">
-        <div class="lock-icon">🔒</div>
-        <h1>Welcome to Aegisens</h1>
-        <p>This area is protected. Please enter the password to continue.</p>
-        <!-- INPUT i BUTTON z poprawnymi ID -->
-        <input type="password" id="passwordInput" placeholder="Enter your password">
-        <button id="unlockButton" onclick="checkPassword()">Unlock</button>
-        <!-- Komunikat o błędzie -->
-        <p id="errorMessage">Incorrect password. Please try again.</p>
+    <!-- PASSWORD GATE - shown first -->
+    <div class="password-gate" id="passwordGate">
+        <h1>Aegisync Tech Core</h1>
+        <p>Enter stealth key for access to the confidential demonstration.</p>
+        
+        <div class="password-input">
+            <input type="password" id="passwordInput" placeholder="Enter access key">
+            <button onclick="checkPassword()">Unlock</button>
+        </div>
+        <p class="error-message" id="errorMessage">Invalid key. Access denied.</p>
     </div>
 
-    <!-- GŁÓWNA ZAWARTOŚĆ - ukryta na początku -->
-    <div id="mainContent">
-        <h1>🎉 Access Granted!</h1>
-        <p>Welcome to the secure area of <strong>Aegisens</strong>.</p>
-        <div class="welcome-message">
-            <h2>Health That Senses You</h2>
-            <p>Your content goes here. You can now build your full application or presentation.</p>
-            <p>Remember, this "lock" is a front-end visual effect only. For real security, you need server-side validation.</p>
-        </div>
-        <!-- GŁÓWNA ZAWARTOŚĆ - ukryta na początku -->
-    <div id="mainContent">
-        <h1>🎉 Access Granted!</h1>
-        <p>Welcome to the secure area of <strong>Aegisens</strong>.</p>
-        <div class="welcome-message">
-            <h2>Health That Senses You</h2>
-            <p>Your content goes here. You can now build your full application or presentation.</p>
-            <p>Remember, this "lock" is a front-end visual effect only. For real security, you need server-side validation.</p>
-            </div>
-<!-- MAIN CONTENT (hidden) -->
+    <!-- MAIN CONTENT - hidden until correct password -->
     <div class="content" id="mainContent">
         <header style="text-align: center; margin-bottom: 3rem;">
             <h1 style="font-size: 2.8rem;">AEGISYNC TECH CORE</h1>
@@ -218,54 +346,105 @@
             <p>Next layers available upon request: Nutrition-DNA algorithm • Clinical data pipeline • IP strategy</p>
             <p style="margin-top: 0.5rem; color: #718096;">© 2025 Aegisens • "Health That Senses You"</p>
         </div>
-    <!-- SKRYPT JAVASCRIPT -->
-    <script>
-        const CORRECT_PASSWORD = "AegisensStealth2025"; // Twoje hasło
+    </div>
 
-        document.addEventListener('DOMContentLoaded', function() {
+    <!-- JAVASCRIPT -->
+    <script>
+        // Correct password - same as before
+        const CORRECT_PASSWORD = "AegisensStealth2025";
+
+        // Function to check the password
+        function checkPassword() {
             const passwordInput = document.getElementById('passwordInput');
             const errorMessage = document.getElementById('errorMessage');
             const passwordGate = document.getElementById('passwordGate');
             const mainContent = document.getElementById('mainContent');
-            const unlockButton = document.getElementById('unlockButton');
 
-            // Funkcja sprawdzająca hasło
-            window.checkPassword = function() {
-                if (passwordInput.value === CORRECT_PASSWORD) {
-                    // Płynne przejście
-                    passwordGate.style.opacity = '0';
-                    passwordGate.style.transition = 'opacity 0.5s ease';
-                    
-                    setTimeout(() => {
-                        passwordGate.style.display = 'none';
-                        mainContent.style.display = 'block';
-                        window.location.hash = 'unlocked';
-                    }, 500);
-
-                    passwordInput.value = ''; // Wyczyść pole
-                    errorMessage.style.display = 'none'; // Ukryj błąd jeśli był widoczny
-                } else {
-                    errorMessage.style.display = 'block';
-                    passwordInput.style.borderColor = '#ff6b6b';
-                    passwordInput.select(); // Zaznacz tekst do poprawy
-                }
-            }
-
-            // Enter też działa
-            passwordInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    checkPassword();
-                }
-            });
-
-            // Jeśli wrócił z hashtagiem, od razu pokaż treść
-            if (window.location.hash === '#unlocked') {
+            if (passwordInput.value === CORRECT_PASSWORD) {
+                // Hide password gate, show main content
                 passwordGate.style.display = 'none';
-                mainContent.style.display = 'block';
+                mainContent.classList.add('active'); // Use the CSS class to trigger animation
+                
+                // Add hash to URL so refresh keeps content visible
+                window.location.hash = 'unlocked';
+                
+                // Clear any error
+                errorMessage.style.display = 'none';
+                passwordInput.style.borderColor = '';
+            } else {
+                // Show error
+                errorMessage.style.display = 'block';
+                passwordInput.style.borderColor = '#ff6b6b';
+                passwordInput.select(); // Select the text for easy retry
+            }
+        }
+
+        // Allow Enter key to submit password
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
             }
         });
+
+        // If returning to page with #unlocked in URL, show content immediately
+        if (window.location.hash === '#unlocked') {
+            document.getElementById('passwordGate').style.display = 'none';
+            document.getElementById('mainContent').classList.add('active');
+        }
+
+        // Slider functionality for the Hormonal Predictor Demo
+        const cycleSlider = document.getElementById('cycleSlider');
+        const dayDisplay = document.getElementById('dayDisplay');
+        const predictionOutput = document.getElementById('predictionOutput');
+
+        // Function to update prediction based on slider
+        function updatePrediction(day) {
+            dayDisplay.textContent = `Day ${day}`;
+            
+            let predictionText = '';
+            if (day <= 7) {
+                predictionText = `
+                    <h3>Predicted State (Day ${day}):</h3>
+                    <p>• Menstrual phase | • Lower energy | • Focus on recovery</p>
+                    <p>• Recommended: Light exercise, planning, creative tasks</p>
+                    <p>• Mood prediction: Introspective, calm</p>
+                `;
+            } else if (day <= 14) {
+                predictionText = `
+                    <h3>Predicted State (Day ${day}):</h3>
+                    <p>• Follicular phase | • Rising energy | • Building motivation</p>
+                    <p>• Recommended: Social activities, learning new skills</p>
+                    <p>• Mood prediction: Optimistic, social</p>
+                `;
+            } else if (day <= 21) {
+                predictionText = `
+                    <h3>Predicted State (Day ${day}):</h3>
+                    <p>• Ovulation phase | • Peak energy | • High cognitive function</p>
+                    <p>• Recommended: Important meetings, intense workouts</p>
+                    <p>• Mood prediction: Confident, assertive</p>
+                `;
+            } else {
+                predictionText = `
+                    <h3>Predicted State (Day ${day}):</h3>
+                    <p>• Luteal phase | • Variable energy | • Increased intuition</p>
+                    <p>• Recommended: Detail-oriented tasks, organization</p>
+                    <p>• Mood prediction: Thoughtful, pragmatic</p>
+                `;
+            }
+            
+            predictionOutput.innerHTML = predictionText;
+        }
+
+        // Set up slider event
+        if (cycleSlider) {
+            // Initial update
+            updatePrediction(cycleSlider.value);
+            
+            // Update when slider moves
+            cycleSlider.addEventListener('input', function() {
+                updatePrediction(this.value);
+            });
+        }
     </script>
 </body>
 </html>
-
-
