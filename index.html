@@ -350,25 +350,15 @@
     </div>
 
     <script>
-        // PASSWORD PROTECTION
-        const CORRECT_PASSWORD = "AegisensStealth2025";
-        
-        function checkPassword() {
-            const input = document.getElementById('passwordInput').value;
-            const error = document.getElementById('errorMessage');
-            const gate = document.getElementById('passwordGate');
-            const content = document.getElementById('mainContent');
-            
-            if (input === CORRECT_PASSWORD) {
-                gate.style.display = 'none';
-                content.classList.add('active');
-                // Update URL hash for bookmarking
-                window.location.hash = 'unlocked';
-            } else {
-                error.style.display = 'block';
-                document.getElementById('passwordInput').style.borderColor = '#ff6b6b';
-            }
+         const CORRECT_PASSWORD = "AegisensStealth2025";
+    function checkPassword() {
+        const input = document.getElementById('passwordInput').value;
+        if (input === CORRECT_PASSWORD) {
+            // ... ukryj gate, pokaż treść ...
+        } else {
+            // ... pokaż błąd ...
         }
+    }
         
         // Allow Enter key
         document.getElementById('passwordInput').addEventListener('keypress', function(e) {
@@ -430,4 +420,5 @@
         updatePrediction(14);
     </script>
 </body>
+
 </html>
