@@ -341,8 +341,6 @@
                     <li>Privacy-by-design: On-device processing where possible</li>
                     <li>Scalable to 1M+ users via cloud inference optimization</li>
                 </ul>
-            </div>
-        </section>
 <!-- ========================== -->
 <!-- VALIDATION METRICS SECTION -->
 <!-- ========================== -->
@@ -417,18 +415,44 @@
             </tbody>
         </table>
     </div>
-    
-    <!-- AUC CURVE VISUALIZATION -->
-    <div style="margin-bottom: 3rem;">
-        <h3 style="color: #90cdf4; margin-bottom: 1rem;">ROC Curve (Receiver Operating Characteristic)</h3>
-        <div style="position: relative; height: 300px; background: #1a202c; border-radius: 8px; padding: 1rem;">
-            <!-- Canvas for AUC Curve -->
-            <canvas id="aucCurve" width="800" height="300" style="width: 100%; height: 100%;"></canvas>
-            <div style="position: absolute; top: 20px; right: 20px; background: rgba(26, 32, 44, 0.9); padding: 8px 12px; border-radius: 6px; font-size: 0.9rem;">
-                <span style="color: #00d4ff;">AUC = 0.91</span>
-            </div>
-        </div>
-        <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 1rem;">
+    <!-- AUC CURVE VISUALIZATION - SIMPLE SVG -->
+<div style="margin-bottom: 3rem;">
+    <h3 style="color: #90cdf4; margin-bottom: 1rem;">ROC Curve (Receiver Operating Characteristic)</h3>
+    <div style="position: relative; background: #1a202c; border-radius: 8px; padding: 1rem;">
+        <!-- SVG Chart -->
+        <svg width="100%" height="300" viewBox="0 0 800 300" style="display: block;">
+            <!-- Grid -->
+            <line x1="50" y1="250" x2="750" y2="250" stroke="#2d3748" stroke-width="1"/>
+            <line x1="50" y1="50" x2="50" y2="250" stroke="#2d3748" stroke-width="1"/>
+            
+            <!-- Diagonal (random) -->
+            <line x1="50" y1="250" x2="750" y2="50" stroke="#4a5568" stroke-width="1" stroke-dasharray="5,5"/>
+            
+            <!-- AUC Curve Fill -->
+            <path d="M 50,250 
+                     C 150,200 300,150 450,100
+                     S 600,70 750,50
+                     L 750,250 Z" 
+                  fill="rgba(0, 136, 255, 0.1)" stroke="none"/>
+            
+            <!-- AUC Curve Line -->
+            <path d="M 50,250 
+                     C 150,200 300,150 450,100
+                     S 600,70 750,50" 
+                  fill="none" stroke="#0088ff" stroke-width="3"/>
+            
+            <!-- Target AUC (dotted) -->
+            <path d="M 50,250 
+                     C 200,180 400,90 750,50" 
+                  fill="none" stroke="#68d391" stroke-width="1" stroke-dasharray="3,3"/>
+            
+            <!-- Labels -->
+            <text x="400" y="290" fill="#a0aec0" font-size="12" text-anchor="middle">False Positive Rate</text>
+            <text x="15" y="150" fill="#a0aec0" font-size="12" text-anchor="middle" transform="rotate(-90, 15, 150)">True Positive Rate</text>
+            
+         
+        <!-- Legend -->
+        <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 1rem; flex-wrap: wrap;">
             <div style="display: flex; align-items: center;">
                 <div style="width: 20px; height: 4px; background: #0088ff; margin-right: 8px;"></div>
                 <span style="font-size: 0.9rem; color: #a0aec0;">Our Model (AUC 0.91)</span>
@@ -443,6 +467,7 @@
             </div>
         </div>
     </div>
+</div>
     
     <!-- STUDY DISCLAIMER & NEXT STEPS -->
     <div style="background: #2d3748; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #0088ff;">
@@ -469,7 +494,6 @@
     </div>
 </section>
 
-<!-- AUC CURVE SCRIPT -->
 <script>
     // Wait for page to load
     document.addEventListener('DOMContentLoaded', function() {
@@ -608,6 +632,9 @@ ctx.lineTo(width - padding, padding);
         ctx.fillText('AUC = 0.91', width - 120, padding + 30);
     });
 </script>
+            </div>
+        </section>
+
         <div class="footnote">
             <p>Aegisync Tech Core • Confidential Demo v1.0 • For strategic review only</p>
             <p>Next layers available upon request: Nutrition-DNA algorithm • Clinical data pipeline • IP strategy</p>
