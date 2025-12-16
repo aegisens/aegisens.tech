@@ -814,7 +814,52 @@ ctx.lineTo(width - padding, padding);
                 // Hide password gate, show main content
                 passwordGate.style.display = 'none';
                 mainContent.classList.add('active'); // Use the CSS class to trigger animation
-                
+                <!-- PROGRESS STEPS -->
+<div id="progressSteps" style="display: none; margin: 2rem auto 3rem; max-width: 800px;">
+    <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 1rem; flex-wrap: wrap;">
+        <div style="text-align: center; min-width: 100px;">
+            <div style="width: 50px; height: 50px; background: #0088ff; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-weight: bold; font-size: 1.2rem;">1</div>
+            <div style="font-weight: bold; color: #00d4ff;">Technology</div>
+            <div style="font-size: 0.8rem; color: #a0aec0;">Core AI Engine</div>
+        </div>
+        <div style="text-align: center; min-width: 100px;">
+            <div style="width: 50px; height: 50px; background: #0088ff; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-weight: bold; font-size: 1.2rem;">2</div>
+            <div style="font-weight: bold; color: #00d4ff;">Validation</div>
+            <div style="font-size: 0.8rem; color: #a0aec0;">Clinical Proof</div>
+        </div>
+        <div style="text-align: center; min-width: 100px;">
+            <div style="width: 50px; height: 50px; background: #0088ff; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-weight: bold; font-size: 1.2rem;">3</div>
+            <div style="font-weight: bold; color: #00d4ff;">Competitive Edge</div>
+            <div style="font-size: 0.8rem; color: #a0aec0;">Unbreakable Moat</div>
+        </div>
+        <div style="text-align: center; min-width: 100px;">
+            <div style="width: 50px; height: 50px; background: #2d3748; color: #a0aec0; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-weight: bold; font-size: 1.2rem;">4</div>
+            <div style="font-weight: bold; color: #a0aec0;">Traction</div>
+            <div style="font-size: 0.8rem; color: #718096;">Coming Next</div>
+        </div>
+    </div>
+    <div style="height: 4px; background: #2d3748; border-radius: 2px; position: relative; max-width: 600px; margin: 0 auto;">
+        <div style="position: absolute; left: 0; width: 75%; height: 100%; background: #0088ff; border-radius: 2px;"></div>
+    </div>
+</div>
+
+<script>
+    // Show progress steps when content is revealed
+    function showProgressSteps() {
+        const progress = document.getElementById('progressSteps');
+        if (progress) {
+            progress.style.display = 'block';
+            // Animate in
+            progress.style.opacity = '0';
+            progress.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => { progress.style.opacity = '1'; }, 100);
+        }
+    }
+    
+    // Call this in checkPassword() after showing content
+    // Add this line inside checkPassword() after content.classList.add('active'):
+    // showProgressSteps();
+</script>
 if (typeof window.showTimerAfterLogin === 'function') {
         window.showTimerAfterLogin();
     }
@@ -964,3 +1009,4 @@ if (typeof window.showTimerAfterLogin === 'function') {
 </script>
 </body>
 </html>
+
