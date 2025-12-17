@@ -212,6 +212,16 @@
                 transform: translateX(50%);
             }
         }
+/* FORCE CONTENT VISIBILITY */
+#mainContent {
+    display: none;
+}
+
+#mainContent.unlocked {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
     </style>
 </head>
 
@@ -847,33 +857,32 @@ ctx.lineTo(width - padding, padding);
         const CORRECT_PASSWORD = "AegisensStealth2025";
 
         // Function to check the password
-        function checkPassword() {
-            const passwordInput = document.getElementById('passwordInput');
-            const errorMessage = document.getElementById('errorMessage');
-            const passwordGate = document.getElementById('passwordGate');
-            const mainContent = document.getElementById('mainContent');
-
-            if (passwordInput.value === CORRECT_PASSWORD) {
-                // Hide password gate, show main content
-                passwordGate.style.display = 'none';
-                mainContent.classList.add('active'); // Use the CSS class to trigger animation
-                
-if (typeof window.showTimerAfterLogin === 'function') {
-        window.showTimerAfterLogin();
+       function checkPassword() {
+    const password = "AegisensStealth2025";
+    const input = document.getElementById('passwordInput').value;
+    
+    if (input.trim() === password) {
+        // UKRYJ GATE
+        document.getElementById('passwordGate').style.display = 'none';
+        
+        // POKAŻ CAŁĄ ZAWARTOŚĆ
+        document.getElementById('mainContent').style.display = 'block';
+        
+        // DODAJ HASH DO URL (żeby refresh nie blokował)
+        window.location.hash = 'unlocked';
+        
+        // FORCE REDRAW (fix dla niektórych przeglądarek)
+        document.body.offsetHeight;
+        
+        console.log("Access granted - all content should be visible");
+        return true;
+    } else {
+        // POKAŻ BŁĄD
+        document.getElementById('errorMessage').style.display = 'block';
+        document.getElementById('passwordInput').style.borderColor = '#ff6b6b';
+        return false;
     }
-                // Add hash to URL so refresh keeps content visible
-                window.location.hash = 'unlocked';
-                
-                // Clear any error
-                errorMessage.style.display = 'none';
-                passwordInput.style.borderColor = '';
-            } else {
-                // Show error
-                errorMessage.style.display = 'block';
-                passwordInput.style.borderColor = '#ff6b6b';
-                passwordInput.select(); // Select the text for easy retry
-            }
-        }
+}
 
         // Allow Enter key to submit password
         document.getElementById('passwordInput').addEventListener('keypress', function(e) {
@@ -1004,6 +1013,12 @@ if (typeof window.showTimerAfterLogin === 'function') {
         
         window.showTimerAfterLogin = showStealthTimer;
     });
+// AUTO-UNLOCK IF URL HAS HASH
+if (window.location.hash === '#unlocked') {
+    document.getElementById('passwordGate').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    document.getElementById('mainContent').classList.add('unlocked');
+}
 </script>
 </body>
 </html>
